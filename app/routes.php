@@ -11,15 +11,15 @@
 |
 */
 
-Route::group(array('prefix' => LaravelLocalization::setLanguage()), function()
+Route::group(array('prefix' => LaravelLocalization::setLanguage(),'before' => 'LaravelLocalizationRoutes'), function()
     {
         /** ADD ALL LOCALIZED ROUTES INSIDE THIS GROUP **/
-        Route::get('/', function()
+        Route::get('/', ["as"=>'home',function()
         {
             return View::make('hello');
-        });
+        }]);
 
-        Route::get('test',function(){
-            return View::make('test');
-        });
+		Route::get(LaravelLocalization::transRoute('routes.viewUser'),["as"=>'viewUser',function($name){
+			return View::make('user',array('name'=>$name));
+		}]);
     });
